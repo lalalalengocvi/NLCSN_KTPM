@@ -1,0 +1,9 @@
+{% extends 'base.html' %} 
+{% block title %} Đăng xuất {% endblock title %}
+{%block content %}
+  <h1 class="display-4 my-2">Đã đăng xuất</h1>
+  <hr />
+  <p> Bãn đã đăng xuất khỏi tài khoản của mình, bạn có thể đăng nhập lại 
+    <a href="{% url 'login' %}">Tại đây</a>.
+  </p>
+{% endblock content %}

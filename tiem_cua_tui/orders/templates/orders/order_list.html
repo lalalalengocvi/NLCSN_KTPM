@@ -1,0 +1,55 @@
+{% extends 'base.html' %} 
+{% block title %}Đơn hàng của bạn {% endblock title %}
+{% block content %}
+<h1 class="display-4 mt-4 text-center">Đơn hàng của bạn</h1>
+<hr />
+<ul class="list-group my-3">
+  {% for order in orders %}
+  <li class="list-group-item">
+    <h5 class="mb-2">
+      {% if order.status == 'Delivered' %}
+      <span class="badge badge-success font-weight-light"  style="background-color: #0074E1;">{{order.status}} </span>
+      {% else %}
+      <span class="badge badge-success" style="background-color: #0074E1;">{{order.status}}</span>
+      {% endif %}
+    </h5>
+    <h3>
+      <a href="{% url 'orders:details' order.id %}">Mã đơn hàng - {{order.id}}</a>
+    </h3>
+    <h5>{{order.total_price}} $</h5>
+    <p class="mb-0">{{order.total_items}} Sản phẩm</p>
+    <p class="mb-0">
+      Địa chỉ giao hàng - {{order.address}}, {{order.city}}, {{order.pin_code}}
+    </p>
+    <p class="mb-0">Đã đặt{{order.created|timesince}} trước đó.</p>
+  </li>
+  {% empty %}
+  <li class="list-group-item text-center border-white">
+    <h3 class="font-weight-light">Bạn chưa đặt bất kì đơn hàng nào.</h3>
+    <a href="{% url 'store:product_list' %}" class="btn btn-default" style="background-color: #F79E02";
+    >
+      Tiếp tục mua sắm
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% with page_obj as page %}
+<p>Trang <b>{{page.number}}</b> of <b>{{page.paginator.num_pages}}</b></p>
+<nav>
+  <ul class="pagination">
+    {% if page.has_previous %}
+    <li class="page-item">
+      <a href="?page={{page.previous_page_number}}" class="page-link">
+        Trước
+      </a>
+    </li>
+    {% endif %}
+    <li class="page-item active"><a href="#" class="page-link">1</a></li>
+    {% if page.has_next %}
+    <li class="page-item">
+      <a href="?page={{page.next_page_number}}" class="page-link">Sau</a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endwith %} {% endblock content %}
